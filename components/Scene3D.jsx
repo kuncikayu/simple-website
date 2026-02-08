@@ -2,6 +2,27 @@
 
 import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
+import { THEME } from '../lib/theme'
+
+// Theme-based colors
+const THEME_COLORS = {
+    dark: {
+        sphere: 0xa855f7,      // Purple
+        particles: 0x06b6d4,   // Cyan
+        ambientLight: 0xffffff,
+        pointLight1: 0xffffff,
+        pointLight2: 0x3b82f6, // Blue
+    },
+    light: {
+        sphere: 0x7c3aed,      // Darker purple for contrast
+        particles: 0x0891b2,   // Darker cyan
+        ambientLight: 0xffffff,
+        pointLight1: 0xffd700, // Golden light
+        pointLight2: 0x2563eb, // Darker blue
+    }
+}
+
+const colors = THEME_COLORS[THEME]
 
 export default function Scene3D() {
     const containerRef = useRef(null)
@@ -27,7 +48,7 @@ export default function Scene3D() {
         // Create animated sphere
         const geometry = new THREE.IcosahedronGeometry(2, 4)
         const material = new THREE.MeshStandardMaterial({
-            color: 0xa855f7,
+            color: colors.sphere,
             roughness: 0.2,
             metalness: 0.8,
             wireframe: false,
@@ -51,7 +72,7 @@ export default function Scene3D() {
 
         const particlesMaterial = new THREE.PointsMaterial({
             size: 0.02,
-            color: 0x06b6d4,
+            color: colors.particles,
             transparent: true,
             opacity: 0.6,
         })
@@ -60,14 +81,14 @@ export default function Scene3D() {
         scene.add(particlesMesh)
 
         // Lights
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
+        const ambientLight = new THREE.AmbientLight(colors.ambientLight, 0.5)
         scene.add(ambientLight)
 
-        const pointLight1 = new THREE.PointLight(0xffffff, 1)
+        const pointLight1 = new THREE.PointLight(colors.pointLight1, 1)
         pointLight1.position.set(10, 10, 10)
         scene.add(pointLight1)
 
-        const pointLight2 = new THREE.PointLight(0x3b82f6, 0.5)
+        const pointLight2 = new THREE.PointLight(colors.pointLight2, 0.5)
         pointLight2.position.set(-10, -10, -10)
         scene.add(pointLight2)
 
