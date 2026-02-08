@@ -3,6 +3,7 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { THEME } from '../lib/theme'
+import { Analytics } from '@vercel/analytics/next'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,6 +17,7 @@ export default function RootLayout({ children }) {
             </head>
             <body className={`${inter.className} ${THEME}-theme`} data-theme={THEME}>
                 {children}
+                <Analytics />
             </body>
         </html>
     )
